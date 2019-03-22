@@ -7,8 +7,7 @@ class Ti2c{
     Ti2c();
     Ti2c(uint8_t i2caddr);
     void sendStr(char buf[]);
-    void receiveStr();
+    int receiveStr();
     uint8_t addr;
-    char buf[100];
 };
 #endif

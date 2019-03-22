@@ -17,10 +17,18 @@ void Ti2c::sendStr(char buf[]) {
   Wire.endTransmission();		// 送信完了
 }
 
-void Ti2c::receiveStr() {
+int Ti2c::receiveStr() {
+  char buf[100];
   char b_buf[SIZE] = "";
+  byte val;
   int i = 0;
-    byte val;
+  long j = 0;
+  while (1) {
+    j++;
+    if (j > 1000) {
+      sprintf(buf, "TimeOut");
+      return 0;
+    }
 
     while (Wire.available()) {
       val = Wire.read();
@@ -32,7 +40,10 @@ void Ti2c::receiveStr() {
         b_buf[i++] = val;
       }
     }
-    if (val == postfix) {
-      sprintf(this->buf, "%s", b_buf);
+    if (val == postfix)
+    {
+      sprintf(buf, "%s", b_buf);
+      return atoi(buf);
     }
+  }
 }
